@@ -1,0 +1,34 @@
+﻿@model DateProject1.Models.AgePreference
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AgePreference</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MinAge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MinAge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxAge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxAge)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AgePreferenceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

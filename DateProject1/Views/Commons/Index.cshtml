@@ -1,0 +1,63 @@
+﻿@model IEnumerable<DateProject1.Models.Common>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Sports)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Music)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Food)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Books)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shows)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Movies)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sports)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Music)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Food)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Books)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shows)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Movies)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CommonID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CommonID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CommonID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -49,6 +49,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -195,14 +197,61 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\AgePreferencesController.cs" />
+    <Compile Include="Controllers\CommonsController.cs" />
+    <Compile Include="Controllers\EducationsController.cs" />
+    <Compile Include="Controllers\EthnicsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\PeopleController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account.cs">
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AgePreference.cs">
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Common.cs">
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DateModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DateModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DateModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DateModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DateModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Education.cs">
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ethnic.cs">
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs">
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Person.cs">
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Report.cs">
+      <DependentUpon>DateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -215,10 +264,28 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\DateModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DateModel.edmx</DependentUpon>
+      <LastGenOutput>DateModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DateModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DateModel.edmx</DependentUpon>
+      <LastGenOutput>DateModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <EntityDeploy Include="Models\DateModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DateModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DateModel.edmx.diagram">
+      <DependentUpon>DateModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -231,14 +298,19 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Views\Images\BannerTest.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -265,6 +337,47 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\AgePreferences\Create.cshtml" />
+    <Content Include="Views\AgePreferences\Delete.cshtml" />
+    <Content Include="Views\AgePreferences\Details.cshtml" />
+    <Content Include="Views\AgePreferences\Edit.cshtml" />
+    <Content Include="Views\AgePreferences\Index.cshtml" />
+    <Content Include="Views\Commons\Create.cshtml" />
+    <Content Include="Views\Commons\Delete.cshtml" />
+    <Content Include="Views\Commons\Details.cshtml" />
+    <Content Include="Views\Commons\Edit.cshtml" />
+    <Content Include="Views\Commons\Index.cshtml" />
+    <Content Include="Views\Educations\Create.cshtml" />
+    <Content Include="Views\Educations\Delete.cshtml" />
+    <Content Include="Views\Educations\Details.cshtml" />
+    <Content Include="Views\Educations\Edit.cshtml" />
+    <Content Include="Views\Educations\Index.cshtml" />
+    <Content Include="Views\Ethnics\Create.cshtml" />
+    <Content Include="Views\Ethnics\Delete.cshtml" />
+    <Content Include="Views\Ethnics\Details.cshtml" />
+    <Content Include="Views\Ethnics\Edit.cshtml" />
+    <Content Include="Views\Ethnics\Index.cshtml" />
+    <Content Include="Views\People\AddImage.cshtml" />
+    <Content Include="Views\People\Create.cshtml" />
+    <Content Include="Views\People\Delete.cshtml" />
+    <Content Include="Views\People\Details.cshtml" />
+    <Content Include="Views\People\Edit.cshtml" />
+    <Content Include="Views\People\Index.cshtml" />
+    <Content Include="Views\Reports\Create.cshtml" />
+    <Content Include="Views\Reports\Delete.cshtml" />
+    <Content Include="Views\Reports\Details.cshtml" />
+    <Content Include="Views\Reports\Edit.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Messages\Create.cshtml" />
+    <Content Include="Views\Messages\Delete.cshtml" />
+    <Content Include="Views\Messages\Details.cshtml" />
+    <Content Include="Views\Messages\Edit.cshtml" />
+    <Content Include="Views\Messages\Index.cshtml" />
+    <Content Include="Views\Accounts\Create.cshtml" />
+    <Content Include="Views\Accounts\Delete.cshtml" />
+    <Content Include="Views\Accounts\Details.cshtml" />
+    <Content Include="Views\Accounts\Edit.cshtml" />
+    <Content Include="Views\Accounts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -281,6 +394,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

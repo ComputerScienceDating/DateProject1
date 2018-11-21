@@ -1,0 +1,597 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="datedbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="CommonID" Type="int" Nullable="false" />
+          <Property Name="EducationID" Type="int" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AgePreference">
+          <Key>
+            <PropertyRef Name="AgePreferenceID" />
+          </Key>
+          <Property Name="AgePreferenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MinAge" Type="int" Nullable="false" />
+          <Property Name="MaxAge" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Common">
+          <Key>
+            <PropertyRef Name="CommonID" />
+          </Key>
+          <Property Name="CommonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sports" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Music" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Food" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Books" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Shows" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Movies" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Education">
+          <Key>
+            <PropertyRef Name="EducationID" />
+          </Key>
+          <Property Name="EducationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="School" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Major" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GradYear" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ethnic">
+          <Key>
+            <PropertyRef Name="EthnicID" />
+          </Key>
+          <Property Name="EthnicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ethnicity" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="Body" Type="varchar(max)" Nullable="false" />
+          <Property Name="Outbox" Type="varchar(max)" Nullable="false" />
+          <Property Name="FromID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EthnicID" Type="int" Nullable="false" />
+          <Property Name="AgePreferenceID" Type="int" Nullable="false" />
+          <Property Name="EthnicPref" Type="int" Nullable="false" />
+          <Property Name="Occupation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="SexOrientation" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NickName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Photo" Type="image" Nullable="false" />
+          <Property Name="Bio" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="ReportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="Reason" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Account_Common">
+          <End Role="Common" Type="Self.Common" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Common">
+              <PropertyRef Name="CommonID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="CommonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_Education">
+          <End Role="Education" Type="Self.Education" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Education">
+              <PropertyRef Name="EducationID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="EducationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="FromID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Account1">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_AgePreference">
+          <End Role="AgePreference" Type="Self.AgePreference" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AgePreference">
+              <PropertyRef Name="AgePreferenceID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="AgePreferenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_Ethnic">
+          <End Role="Ethnic" Type="Self.Ethnic" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ethnic">
+              <PropertyRef Name="EthnicID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="EthnicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="datedbModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AgePreference" EntityType="Self.AgePreference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Common" EntityType="Self.Common" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Education" EntityType="Self.Education" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ethnic" EntityType="Self.Ethnic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_Common" Association="Self.FK_Account_Common">
+            <End Role="Common" EntitySet="Common" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_Education" Association="Self.FK_Account_Education">
+            <End Role="Education" EntitySet="Education" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_Person" Association="Self.FK_Account_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Account" Association="Self.FK_Message_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Account1" Association="Self.FK_Message_Account1">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_AgePreference" Association="Self.FK_Person_AgePreference">
+            <End Role="AgePreference" EntitySet="AgePreference" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_Ethnic" Association="Self.FK_Person_Ethnic">
+            <End Role="Ethnic" EntitySet="Ethnic" />
+            <End Role="Person" EntitySet="Person" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_Account" Association="Self.FK_Report_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="datedbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CommonID" Type="Int32" Nullable="false" />
+          <Property Name="EducationID" Type="Int32" Nullable="false" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Common" Relationship="Self.FK_Account_Common" FromRole="Account" ToRole="Common" />
+          <NavigationProperty Name="Education" Relationship="Self.FK_Account_Education" FromRole="Account" ToRole="Education" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Account_Person" FromRole="Account" ToRole="Person" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Message_Account" FromRole="Account" ToRole="Message" />
+          <NavigationProperty Name="Messages1" Relationship="Self.FK_Message_Account1" FromRole="Account" ToRole="Message" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Account" FromRole="Account" ToRole="Report" />
+        </EntityType>
+        <EntityType Name="AgePreference">
+          <Key>
+            <PropertyRef Name="AgePreferenceID" />
+          </Key>
+          <Property Name="AgePreferenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MinAge" Type="Int32" Nullable="false" />
+          <Property Name="MaxAge" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="People" Relationship="Self.FK_Person_AgePreference" FromRole="AgePreference" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Common">
+          <Key>
+            <PropertyRef Name="CommonID" />
+          </Key>
+          <Property Name="CommonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sports" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Music" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Food" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Books" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Shows" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Movies" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Common" FromRole="Common" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Education">
+          <Key>
+            <PropertyRef Name="EducationID" />
+          </Key>
+          <Property Name="EducationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="School" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Major" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GradYear" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Education" FromRole="Education" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Ethnic">
+          <Key>
+            <PropertyRef Name="EthnicID" />
+          </Key>
+          <Property Name="EthnicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ethnicity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="People" Relationship="Self.FK_Person_Ethnic" FromRole="Ethnic" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Outbox" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FromID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Message_Account" FromRole="Message" ToRole="Account" />
+          <NavigationProperty Name="Account1" Relationship="Self.FK_Message_Account1" FromRole="Message" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EthnicID" Type="Int32" Nullable="false" />
+          <Property Name="AgePreferenceID" Type="Int32" Nullable="false" />
+          <Property Name="EthnicPref" Type="Int32" Nullable="false" />
+          <Property Name="Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SexOrientation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Bio" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Person" FromRole="Person" ToRole="Account" />
+          <NavigationProperty Name="AgePreference" Relationship="Self.FK_Person_AgePreference" FromRole="Person" ToRole="AgePreference" />
+          <NavigationProperty Name="Ethnic" Relationship="Self.FK_Person_Ethnic" FromRole="Person" ToRole="Ethnic" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="ReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Report_Account" FromRole="Report" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK_Account_Common">
+          <End Role="Common" Type="Self.Common" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Common">
+              <PropertyRef Name="CommonID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="CommonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_Education">
+          <End Role="Education" Type="Self.Education" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Education">
+              <PropertyRef Name="EducationID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="EducationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Account_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="FromID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Account1">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_AgePreference">
+          <End Role="AgePreference" Type="Self.AgePreference" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AgePreference">
+              <PropertyRef Name="AgePreferenceID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="AgePreferenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Person_Ethnic">
+          <End Role="Ethnic" Type="Self.Ethnic" Multiplicity="1" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ethnic">
+              <PropertyRef Name="EthnicID" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="EthnicID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="datedbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="AgePreferences" EntityType="Self.AgePreference" />
+          <EntitySet Name="Commons" EntityType="Self.Common" />
+          <EntitySet Name="Educations" EntityType="Self.Education" />
+          <EntitySet Name="Ethnics" EntityType="Self.Ethnic" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="Reports" EntityType="Self.Report" />
+          <AssociationSet Name="FK_Account_Common" Association="Self.FK_Account_Common">
+            <End Role="Common" EntitySet="Commons" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_Education" Association="Self.FK_Account_Education">
+            <End Role="Education" EntitySet="Educations" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Account_Person" Association="Self.FK_Account_Person">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Account" Association="Self.FK_Message_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Account1" Association="Self.FK_Message_Account1">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_Account" Association="Self.FK_Report_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_AgePreference" Association="Self.FK_Person_AgePreference">
+            <End Role="AgePreference" EntitySet="AgePreferences" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Person_Ethnic" Association="Self.FK_Person_Ethnic">
+            <End Role="Ethnic" EntitySet="Ethnics" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="datedbModelStoreContainer" CdmEntityContainer="datedbEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="datedbModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CommonID" ColumnName="CommonID" />
+                <ScalarProperty Name="EducationID" ColumnName="EducationID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AgePreferences">
+            <EntityTypeMapping TypeName="datedbModel.AgePreference">
+              <MappingFragment StoreEntitySet="AgePreference">
+                <ScalarProperty Name="AgePreferenceID" ColumnName="AgePreferenceID" />
+                <ScalarProperty Name="MinAge" ColumnName="MinAge" />
+                <ScalarProperty Name="MaxAge" ColumnName="MaxAge" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Commons">
+            <EntityTypeMapping TypeName="datedbModel.Common">
+              <MappingFragment StoreEntitySet="Common">
+                <ScalarProperty Name="CommonID" ColumnName="CommonID" />
+                <ScalarProperty Name="Sports" ColumnName="Sports" />
+                <ScalarProperty Name="Music" ColumnName="Music" />
+                <ScalarProperty Name="Food" ColumnName="Food" />
+                <ScalarProperty Name="Books" ColumnName="Books" />
+                <ScalarProperty Name="Shows" ColumnName="Shows" />
+                <ScalarProperty Name="Movies" ColumnName="Movies" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Educations">
+            <EntityTypeMapping TypeName="datedbModel.Education">
+              <MappingFragment StoreEntitySet="Education">
+                <ScalarProperty Name="EducationID" ColumnName="EducationID" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="Major" ColumnName="Major" />
+                <ScalarProperty Name="GradYear" ColumnName="GradYear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ethnics">
+            <EntityTypeMapping TypeName="datedbModel.Ethnic">
+              <MappingFragment StoreEntitySet="Ethnic">
+                <ScalarProperty Name="EthnicID" ColumnName="EthnicID" />
+                <ScalarProperty Name="Ethnicity" ColumnName="Ethnicity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="datedbModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Outbox" ColumnName="Outbox" />
+                <ScalarProperty Name="FromID" ColumnName="FromID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="datedbModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="EthnicID" ColumnName="EthnicID" />
+                <ScalarProperty Name="AgePreferenceID" ColumnName="AgePreferenceID" />
+                <ScalarProperty Name="EthnicPref" ColumnName="EthnicPref" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="SexOrientation" ColumnName="SexOrientation" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Bio" ColumnName="Bio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reports">
+            <EntityTypeMapping TypeName="datedbModel.Report">
+              <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,114 @@
+﻿@model DateProject1.Models.Person
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Person</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EthnicPref)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EthnicPref)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Occupation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Occupation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SexOrientation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SexOrientation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NickName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NickName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+
+        <dd>
+            <img src="data:image;base64,@System.Convert.ToBase64String(Model.Photo)" width="500" height="500" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AgePreference.AgePreferenceID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AgePreference.AgePreferenceID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ethnic.Ethnicity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ethnic.Ethnicity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PersonID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

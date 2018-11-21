@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3c68e8f59018401aa58f28977bd8f217" Name="Diagram1">
+        <EntityTypeShape EntityType="datedbModel.Account" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="datedbModel.AgePreference" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="datedbModel.Common" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="datedbModel.Education" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="datedbModel.Ethnic" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="datedbModel.Message" Width="1.5" PointX="7.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="datedbModel.Person" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="datedbModel.Report" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="datedbModel.FK_Account_Common" ManuallyRouted="false" />
+        <AssociationConnector Association="datedbModel.FK_Account_Education" ManuallyRouted="false" />
+        <AssociationConnector Association="datedbModel.FK_Account_Person" ManuallyRouted="false" />
+        <AssociationConnector Association="datedbModel.FK_Message_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="datedbModel.FK_Message_Account1" ManuallyRouted="false" />
+        <AssociationConnector Association="datedbModel.FK_Report_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="datedbModel.FK_Person_AgePreference" ManuallyRouted="false" />
+        <AssociationConnector Association="datedbModel.FK_Person_Ethnic" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

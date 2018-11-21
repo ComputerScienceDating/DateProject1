@@ -1,0 +1,26 @@
+﻿@model DateProject1.Models.Ethnic
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ethnic</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ethnicity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ethnicity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EthnicID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

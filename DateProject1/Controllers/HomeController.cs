@@ -8,6 +8,10 @@ namespace DateProject1.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult ThankYou()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();
