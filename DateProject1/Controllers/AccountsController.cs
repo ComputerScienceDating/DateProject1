@@ -56,7 +56,7 @@ namespace DateProject1.Controllers
             {
                 db.Accounts.Add(account);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("../Home/ThankYou");
             }
 
             ViewBag.CommonID = new SelectList(db.Commons, "CommonID", "Sports", account.CommonID);
