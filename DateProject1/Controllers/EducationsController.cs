@@ -52,7 +52,7 @@ namespace DateProject1.Controllers
             {
                 db.Educations.Add(education);
                 db.SaveChanges();
-                return RedirectToAction("../Ethnics/Create");
+                return RedirectToAction("../AgePreferences/Create");
             }
 
             return View(education);
