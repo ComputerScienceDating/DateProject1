@@ -21,7 +21,6 @@ namespace DateProject1.Models
         }
     
         public int PersonID { get; set; }
-        public int EthnicID { get; set; }
         public int AgePreferenceID { get; set; }
         public int EthnicPref { get; set; }
         public string Occupation { get; set; }
@@ -37,6 +36,5 @@ namespace DateProject1.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Account> Accounts { get; set; }
         public virtual AgePreference AgePreference { get; set; }
-        public virtual Ethnic Ethnic { get; set; }
     }
 }

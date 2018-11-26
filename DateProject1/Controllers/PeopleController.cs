@@ -12,12 +12,12 @@ namespace DateProject1.Controllers
 {
     public class PeopleController : Controller
     {
-        private datedbEntities db = new datedbEntities();
+        private datedbEntities1 db = new datedbEntities1();
 
         // GET: People
         public ActionResult Index()
         {
-            var people = db.People.Include(p => p.AgePreference).Include(p => p.Ethnic);
+            var people = db.People.Include(p => p.AgePreference);
             return View(people.ToList());
         }
 
@@ -40,7 +40,6 @@ namespace DateProject1.Controllers
         public ActionResult Create()
         {
             ViewBag.AgePreferenceID = new SelectList(db.AgePreferences, "AgePreferenceID", "AgePreferenceID");
-            ViewBag.EthnicID = new SelectList(db.Ethnics, "EthnicID", "Ethnicity");
             return View();
         }
 
@@ -64,7 +63,6 @@ namespace DateProject1.Controllers
             }
 
             ViewBag.AgePreferenceID = new SelectList(db.AgePreferences, "AgePreferenceID", "AgePreferenceID", person.AgePreferenceID);
-            ViewBag.EthnicID = new SelectList(db.Ethnics, "EthnicID", "Ethnicity", person.EthnicID);
             return View(person);
         }
 
@@ -81,7 +79,6 @@ namespace DateProject1.Controllers
                 return HttpNotFound();
             }
             ViewBag.AgePreferenceID = new SelectList(db.AgePreferences, "AgePreferenceID", "AgePreferenceID", person.AgePreferenceID);
-            ViewBag.EthnicID = new SelectList(db.Ethnics, "EthnicID", "Ethnicity", person.EthnicID);
             return View(person);
         }
 
@@ -99,7 +96,6 @@ namespace DateProject1.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.AgePreferenceID = new SelectList(db.AgePreferences, "AgePreferenceID", "AgePreferenceID", person.AgePreferenceID);
-            ViewBag.EthnicID = new SelectList(db.Ethnics, "EthnicID", "Ethnicity", person.EthnicID);
             return View(person);
         }
 

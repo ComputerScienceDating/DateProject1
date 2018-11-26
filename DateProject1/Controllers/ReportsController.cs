@@ -12,7 +12,7 @@ namespace DateProject1.Controllers
 {
     public class ReportsController : Controller
     {
-        private datedbEntities db = new datedbEntities();
+        private datedbEntities1 db = new datedbEntities1();
 
         // GET: Reports
         public ActionResult Index()

@@ -12,7 +12,7 @@ namespace DateProject1.Controllers
 {
     public class AgePreferencesController : Controller
     {
-        private datedbEntities db = new datedbEntities();
+        private datedbEntities1 db = new datedbEntities1();
 
         // GET: AgePreferences
         public ActionResult Index()

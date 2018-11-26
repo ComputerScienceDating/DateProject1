@@ -12,7 +12,7 @@ namespace DateProject1.Controllers
 {
     public class CommonsController : Controller
     {
-        private datedbEntities db = new datedbEntities();
+        private datedbEntities1 db = new datedbEntities1();
 
         // GET: Commons
         public ActionResult Index()

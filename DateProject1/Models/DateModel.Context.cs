@@ -13,10 +13,10 @@ namespace DateProject1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class datedbEntities : DbContext
+    public partial class datedbEntities1 : DbContext
     {
-        public datedbEntities()
-            : base("name=datedbEntities")
+        public datedbEntities1()
+            : base("name=datedbEntities1")
         {
         }
     
@@ -29,7 +29,6 @@ namespace DateProject1.Models
         public virtual DbSet<AgePreference> AgePreferences { get; set; }
         public virtual DbSet<Common> Commons { get; set; }
         public virtual DbSet<Education> Educations { get; set; }
-        public virtual DbSet<Ethnic> Ethnics { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Report> Reports { get; set; }

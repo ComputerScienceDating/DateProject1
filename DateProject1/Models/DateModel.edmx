@@ -12,7 +12,6 @@
           <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNumber" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="CommonID" Type="int" Nullable="false" />
           <Property Name="EducationID" Type="int" Nullable="false" />
@@ -47,18 +46,11 @@
           <Property Name="Major" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="GradYear" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Ethnic">
-          <Key>
-            <PropertyRef Name="EthnicID" />
-          </Key>
-          <Property Name="EthnicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Ethnicity" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Message">
           <Key>
             <PropertyRef Name="MessageID" />
           </Key>
-          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageID" Type="int" Nullable="false" />
           <Property Name="AccountID" Type="int" Nullable="false" />
           <Property Name="Body" Type="varchar(max)" Nullable="false" />
           <Property Name="Outbox" Type="varchar(max)" Nullable="false" />
@@ -69,7 +61,6 @@
             <PropertyRef Name="PersonID" />
           </Key>
           <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EthnicID" Type="int" Nullable="false" />
           <Property Name="AgePreferenceID" Type="int" Nullable="false" />
           <Property Name="EthnicPref" Type="int" Nullable="false" />
           <Property Name="Occupation" Type="varchar" MaxLength="50" Nullable="false" />
@@ -134,7 +125,7 @@
               <PropertyRef Name="AccountID" />
             </Principal>
             <Dependent Role="Message">
-              <PropertyRef Name="FromID" />
+              <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -146,7 +137,7 @@
               <PropertyRef Name="AccountID" />
             </Principal>
             <Dependent Role="Message">
-              <PropertyRef Name="AccountID" />
+              <PropertyRef Name="FromID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -162,19 +153,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Person_Ethnic">
-          <End Role="Ethnic" Type="Self.Ethnic" Multiplicity="1" />
-          <End Role="Person" Type="Self.Person" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ethnic">
-              <PropertyRef Name="EthnicID" />
-            </Principal>
-            <Dependent Role="Person">
-              <PropertyRef Name="EthnicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Report_Account">
+        <Association Name="FK_Report_Report">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -191,7 +170,6 @@
           <EntitySet Name="AgePreference" EntityType="Self.AgePreference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Common" EntityType="Self.Common" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Education" EntityType="Self.Education" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Ethnic" EntityType="Self.Ethnic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
@@ -219,11 +197,7 @@
             <End Role="AgePreference" EntitySet="AgePreference" />
             <End Role="Person" EntitySet="Person" />
           </AssociationSet>
-          <AssociationSet Name="FK_Person_Ethnic" Association="Self.FK_Person_Ethnic">
-            <End Role="Ethnic" EntitySet="Ethnic" />
-            <End Role="Person" EntitySet="Person" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Report_Account" Association="Self.FK_Report_Account">
+          <AssociationSet Name="FK_Report_Report" Association="Self.FK_Report_Report">
             <End Role="Account" EntitySet="Account" />
             <End Role="Report" EntitySet="Report" />
           </AssociationSet>
@@ -240,7 +214,6 @@
           <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="CommonID" Type="Int32" Nullable="false" />
           <Property Name="EducationID" Type="Int32" Nullable="false" />
@@ -250,7 +223,7 @@
           <NavigationProperty Name="Person" Relationship="Self.FK_Account_Person" FromRole="Account" ToRole="Person" />
           <NavigationProperty Name="Messages" Relationship="Self.FK_Message_Account" FromRole="Account" ToRole="Message" />
           <NavigationProperty Name="Messages1" Relationship="Self.FK_Message_Account1" FromRole="Account" ToRole="Message" />
-          <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Account" FromRole="Account" ToRole="Report" />
+          <NavigationProperty Name="Reports" Relationship="Self.FK_Report_Report" FromRole="Account" ToRole="Report" />
         </EntityType>
         <EntityType Name="AgePreference">
           <Key>
@@ -284,19 +257,11 @@
           <Property Name="GradYear" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Education" FromRole="Education" ToRole="Account" />
         </EntityType>
-        <EntityType Name="Ethnic">
-          <Key>
-            <PropertyRef Name="EthnicID" />
-          </Key>
-          <Property Name="EthnicID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ethnicity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="People" Relationship="Self.FK_Person_Ethnic" FromRole="Ethnic" ToRole="Person" />
-        </EntityType>
         <EntityType Name="Message">
           <Key>
             <PropertyRef Name="MessageID" />
           </Key>
-          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageID" Type="Int32" Nullable="false" />
           <Property Name="AccountID" Type="Int32" Nullable="false" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Outbox" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
@@ -309,7 +274,6 @@
             <PropertyRef Name="PersonID" />
           </Key>
           <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EthnicID" Type="Int32" Nullable="false" />
           <Property Name="AgePreferenceID" Type="Int32" Nullable="false" />
           <Property Name="EthnicPref" Type="Int32" Nullable="false" />
           <Property Name="Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -323,7 +287,6 @@
           <Property Name="Bio" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Person" FromRole="Person" ToRole="Account" />
           <NavigationProperty Name="AgePreference" Relationship="Self.FK_Person_AgePreference" FromRole="Person" ToRole="AgePreference" />
-          <NavigationProperty Name="Ethnic" Relationship="Self.FK_Person_Ethnic" FromRole="Person" ToRole="Ethnic" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -332,7 +295,7 @@
           <Property Name="ReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AccountID" Type="Int32" Nullable="false" />
           <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_Report_Account" FromRole="Report" ToRole="Account" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Report_Report" FromRole="Report" ToRole="Account" />
         </EntityType>
         <Association Name="FK_Account_Common">
           <End Role="Common" Type="Self.Common" Multiplicity="1" />
@@ -378,7 +341,7 @@
               <PropertyRef Name="AccountID" />
             </Principal>
             <Dependent Role="Message">
-              <PropertyRef Name="FromID" />
+              <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -390,11 +353,11 @@
               <PropertyRef Name="AccountID" />
             </Principal>
             <Dependent Role="Message">
-              <PropertyRef Name="AccountID" />
+              <PropertyRef Name="FromID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Report_Account">
+        <Association Name="FK_Report_Report">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
           <ReferentialConstraint>
@@ -418,24 +381,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Person_Ethnic">
-          <End Role="Ethnic" Type="Self.Ethnic" Multiplicity="1" />
-          <End Role="Person" Type="Self.Person" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ethnic">
-              <PropertyRef Name="EthnicID" />
-            </Principal>
-            <Dependent Role="Person">
-              <PropertyRef Name="EthnicID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="datedbEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="datedbEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="AgePreferences" EntityType="Self.AgePreference" />
           <EntitySet Name="Commons" EntityType="Self.Common" />
           <EntitySet Name="Educations" EntityType="Self.Education" />
-          <EntitySet Name="Ethnics" EntityType="Self.Ethnic" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="People" EntityType="Self.Person" />
           <EntitySet Name="Reports" EntityType="Self.Report" />
@@ -459,16 +409,12 @@
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK_Report_Account" Association="Self.FK_Report_Account">
+          <AssociationSet Name="FK_Report_Report" Association="Self.FK_Report_Report">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
           <AssociationSet Name="FK_Person_AgePreference" Association="Self.FK_Person_AgePreference">
             <End Role="AgePreference" EntitySet="AgePreferences" />
-            <End Role="Person" EntitySet="People" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Person_Ethnic" Association="Self.FK_Person_Ethnic">
-            <End Role="Ethnic" EntitySet="Ethnics" />
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
         </EntityContainer>
@@ -477,14 +423,13 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="datedbModelStoreContainer" CdmEntityContainer="datedbEntities">
+        <EntityContainerMapping StorageEntityContainer="datedbModelStoreContainer" CdmEntityContainer="datedbEntities1">
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="datedbModel.Account">
               <MappingFragment StoreEntitySet="Account">
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="CommonID" ColumnName="CommonID" />
                 <ScalarProperty Name="EducationID" ColumnName="EducationID" />
@@ -524,14 +469,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ethnics">
-            <EntityTypeMapping TypeName="datedbModel.Ethnic">
-              <MappingFragment StoreEntitySet="Ethnic">
-                <ScalarProperty Name="EthnicID" ColumnName="EthnicID" />
-                <ScalarProperty Name="Ethnicity" ColumnName="Ethnicity" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="datedbModel.Message">
               <MappingFragment StoreEntitySet="Message">
@@ -547,7 +484,6 @@
             <EntityTypeMapping TypeName="datedbModel.Person">
               <MappingFragment StoreEntitySet="Person">
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
-                <ScalarProperty Name="EthnicID" ColumnName="EthnicID" />
                 <ScalarProperty Name="AgePreferenceID" ColumnName="AgePreferenceID" />
                 <ScalarProperty Name="EthnicPref" ColumnName="EthnicPref" />
                 <ScalarProperty Name="Occupation" ColumnName="Occupation" />
