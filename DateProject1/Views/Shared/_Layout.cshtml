@@ -23,16 +23,41 @@
     }
     .right {
         width: 45%;
-        float: right;  
+        float: right;
+    }
+    .headerArea {
+        width: 100%;
+        height: 110px;
+    }
+    .logoL {
+        width: 10%;
+        height: 105px;
+        top: 0px;
+        float: left;
+        overflow: auto;
+    }
+    .bannerR {
+        width: 85%;
+        height: 105x;
+        top: 0px;
+        float: right;
+        overflow: auto;
     }
 </style>
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <!--James: Trying to make a Banner (Not Working atm)-->
-        <img src="../Images/BannerTest.png"
-             alt="Temp Banner" />
+    <div class="headerArea">
+        <div class="logoL">
+            <a href="../Home/Index">
+                <img src="~/Content/Images/LogoTemp.png" style="width:100%; height:100px"/>
+            </a>
+        </div>
+        <div class="bannerR">
+            <img src="~/Content/Images/BannerTest.png" style="width:100%; height:100px"/>
+        </div>
+    </div>
+    <div class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
