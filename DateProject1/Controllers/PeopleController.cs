@@ -81,6 +81,15 @@ namespace DateProject1.Controllers
                     person.Photo = new byte[image_file.ContentLength];
                     image_file.InputStream.Read(person.Photo, 0, image_file.ContentLength);
                 }
+                var x = 0;
+                foreach (var item in db.AgePreferences)
+                {
+                    if (x < item.AgePreferenceID)
+                    {
+                        x = item.AgePreferenceID;
+                    }
+                }
+                person.AgePreferenceID = x;
                 db.People.Add(person);
                 db.SaveChanges();
                 return RedirectToAction("../Accounts/Create");

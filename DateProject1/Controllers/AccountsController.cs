@@ -71,6 +71,35 @@ namespace DateProject1.Controllers
         {
             if (ModelState.IsValid)
             {
+                var z = 0;
+                foreach (var item in db.Commons)
+                {
+                    if (z < item.CommonID)
+                    {
+                        z = item.CommonID;
+                    }
+                }
+                account.CommonID = z;
+
+                var y = 0;
+                foreach (var item in db.Educations)
+                {
+                    if (y < item.EducationID)
+                    {
+                        y = item.EducationID;
+                    }
+                }
+                account.EducationID = y;
+
+                var w = 0;
+                foreach (var item in db.People)
+                {
+                    if (w < item.PersonID)
+                    {
+                        w = item.PersonID;
+                    }
+                }
+                account.PersonID = w;
                 db.Accounts.Add(account);
                 Message x = new Message();
                 x.Body = "Welcome to Class-Mates!";
