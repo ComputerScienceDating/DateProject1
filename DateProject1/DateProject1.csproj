@@ -261,6 +261,7 @@
     <Content Include="Content\Class-Mates Logo.png" />
     <Content Include="Content\Images\GroupPhoto.jpg" />
     <Content Include="Content\Images\Kappa.jpg" />
+    <Content Include="Content\Images\USCUpstatePanarama.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
