@@ -13,12 +13,20 @@ namespace DateProject1.Controllers
     public class MessagesController : Controller
     {
         private datedbEntities1 db = new datedbEntities1();
-
+        private int FID;
         // GET: Messages
-        public ActionResult Index()
+        public ActionResult Index(string option, string search)
         {
-            var messages = db.Messages.Include(m => m.Account).Include(m => m.Account1);
-            return View(messages.ToList());
+            if (option == "UsernameFID")
+            {
+                return View(db.Messages.Where(m => m.Account.Username.StartsWith(search) || search == null).ToList());
+            }
+            else
+            {
+                return View(db.Messages.Where(m => m.Account1.Username.StartsWith(search) || search == null).ToList());
+            }
+            //var messages = db.Messages.Include(m => m.Account).Include(m => m.Account1);
+            //return View(messages.ToList()); 
         }
 
         // GET: Messages/Details/5
@@ -37,9 +45,11 @@ namespace DateProject1.Controllers
         }
 
         // GET: Messages/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.FromID = new SelectList(db.Accounts, "AccountID", "Username");
+            var store = db.Accounts.Where(a => a.Email == User.Identity.Name).FirstOrDefault();
+            ViewBag.FromID = store.Username;
+            ViewBag.FID = store.Messages1;
             ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "Username");
             return View();
         }
@@ -53,14 +63,38 @@ namespace DateProject1.Controllers
         {
             if (ModelState.IsValid)
             {
+                var store = db.Accounts.Where(a => a.Email == User.Identity.Name).FirstOrDefault();
+                ViewBag.FID = store.AccountID;
+                message.FromID = ViewBag.FID;
                 db.Messages.Add(message);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Outgoing");
             }
-
-            ViewBag.FromID = new SelectList(db.Accounts, "AccountID", "Username", message.FromID);
             ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "Username", message.AccountID);
             return View(message);
+        }
+
+        public ActionResult Inbox(string option, string search)
+        {
+            if (option == "Username")
+            {
+                return View(db.Messages.Where(m => (m.Account1.Username.StartsWith(search) || search == null) && m.Account.Email == User.Identity.Name).ToList());
+            }
+            else
+            {
+                return View(db.Messages.Where(m => (m.Outbox.StartsWith(search) || search == null) && m.Account.Email == User.Identity.Name).ToList());
+            }
+        }
+        public ActionResult Outgoing(string option, string search)
+        {
+            if (option == "Username")
+            {
+                return View(db.Messages.Where(m => (m.Account.Username.StartsWith(search) || search == null) && m.Account1.Email == User.Identity.Name).ToList());
+            }
+            else
+            {
+                return View(db.Messages.Where(m => (m.Outbox.StartsWith(search) || search == null) && m.Account1.Email == User.Identity.Name).ToList());
+            }
         }
 
         // GET: Messages/Edit/5

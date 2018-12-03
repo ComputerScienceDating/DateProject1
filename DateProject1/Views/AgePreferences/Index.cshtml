@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<DateProject1.Models.AgePreference>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage Ages";
 }
 
-<h2>Index</h2>
+<h2>Age Management</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -20,20 +20,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MinAge)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxAge)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AgePreferenceID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AgePreferenceID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AgePreferenceID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinAge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxAge)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AgePreferenceID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AgePreferenceID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AgePreferenceID })
+            </td>
+        </tr>
+    }
 
 </table>

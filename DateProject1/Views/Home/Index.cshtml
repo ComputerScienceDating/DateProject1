@@ -1,4 +1,8 @@
-﻿@{
+﻿
+@model IEnumerable<DateProject1.Models.Message>
+@using Microsoft.AspNet.Identity
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -7,49 +11,129 @@
     <p class="lead">Check your NEW messages!</p>
     <p>
         <a href="../Messages/Inbox" class="btn btn-primary btn-lg">Messages &raquo;</a>
-        <a href="../Commons/Index" class="btn btn-primary btn-lg">Matches &raquo;</a>
-
+        <a href="../Accounts/Matches" class="btn btn-primary btn-lg">Matches &raquo;</a>
     </p>
 </div>
 
+<script>
+    var match = 0;
+    var commonString = "";
+    var matchedUsers = [];
+
+
+    function conCat(x) {
+        commonString = commonString + x;
+        return commonString;
+    }
+</script>
+
 <div class="row">
-    <div class="column left" style="background-color:white">
-        <a href="../Commons/Index">
-            <h2>Matches</h2>
-        </a>
-        <a href="../Commons/Index">
-            <p>Match 1</p>
-        </a>
-        <a href="../Commons/Index">
-            <p>Match 2</p>
-        </a>
-        <a href="../Commons/Index">
-            <p>Match 3</p>
-        </a>
-        <a href="../Commons/Index">
-            <p>Match 4</p>
-        </a>
+    <div class="column left">
+        <h2>Matches</h2>
+        @foreach (var item in Model)
+        {
+            if (item.Account.Email == User.Identity.Name)
+            {
+                foreach (var item2 in Model)
+                {
+                    if (item.Account.Common.Sports == item2.Account.Common.Sports && item2.Account.Email != item.Account.Email)
+                    {
+                        <script>commonString = commonString + '@Html.Raw(item.Account.Common.Sports)' + ', ';</script>
+                    }
+                    if (item.Account.Common.Books == item2.Account.Common.Books && item2.Account.Email != item.Account.Email)
+                    {
+                        <script>commonString = commonString + '@Html.Raw(item.Account.Common.Books)' + ', ';</script>
+                    }
+                    if (item.Account.Common.Food == item2.Account.Common.Food && item2.Account.Email != item.Account.Email)
+                    {
+                        <script>commonString = commonString + '@Html.Raw(item.Account.Common.Food)' + ', ';</script>
+                    }
+                    if (item.Account.Common.Movies == item2.Account.Common.Movies && item2.Account.Email != item.Account.Email)
+                    {
+                        <script>commonString = commonString + '@Html.Raw(item.Account.Common.Movies)' + ', ';</script>
+                    }
+                    if (item.Account.Common.Music == item2.Account.Common.Music && item2.Account.Email != item.Account.Email)
+                    {
+                        <script>commonString = commonString + '@Html.Raw(item.Account.Common.Music)' + ', ';</script>
+                    }
+                    if (item.Account.Common.Shows == item2.Account.Common.Shows && item2.Account.Email != item.Account.Email)
+                    {
+                        <script>commonString = commonString + '@Html.Raw(item.Account.Common.Shows)' + ', ';</script>
+                    }
+                    if ((item.Account.Common.Sports == item2.Account.Common.Sports && item2.Account.Email != item.Account.Email) ||
+                        (item.Account.Common.Books == item2.Account.Common.Books && item2.Account.Email != item.Account.Email) ||
+                        (item.Account.Common.Food == item2.Account.Common.Food && item2.Account.Email != item.Account.Email) ||
+                        (item.Account.Common.Movies == item2.Account.Common.Movies && item2.Account.Email != item.Account.Email) ||
+                        (item.Account.Common.Music == item2.Account.Common.Music && item2.Account.Email != item.Account.Email) ||
+                        (item.Account.Common.Shows == item2.Account.Common.Shows && item2.Account.Email != item.Account.Email))
+                    {
+                        foreach (var item3 in Model)
+                        {
+                            if (item2.Account.Email == item3.Account.Email && item2.MessageID == item3.MessageID)
+                            {
+                                foreach (var item4 in Model)
+                                {
+                                    if (item4.Account.Email == item3.Account.Email && item4.MessageID < item3.MessageID)
+                                    {
+                                        break;
+                                    }
+                                    else if (item4.Account.Email == item3.Account.Email && item4.MessageID == item3.MessageID)
+                                    {
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <img src="data:image;base64,@System.Convert.ToBase64String(item2.Account.Person.Photo)" width="80" height="80" />
+                                                </td>
+                                                <td>
+                                                    <div style="border-style:solid solid double double; border-width:5px">
+                                                        <p>New Match With @Html.DisplayFor(modelItem => item2.Account.Username)</p>
+                                                        <p>
+                                                            You have
+                                                            <script>document.write(commonString)</script> in common!
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    <script>commonString = "";</script>
+
+                    <!--
+                <tr>
+                    <td>
+                        <img src="data:image;base64,@System.Convert.ToBase64String(item2.Account.Person.Photo)" width="80" height="80" />
+                    </td>
+                    <td>
+                        <div style="border-style:solid solid double double; border-width:5px">
+                            <p>New Match With @Html.DisplayFor(modelItem => item2.Account.Username)</p>
+                            <p>You have @Html.DisplayFor(modelItem => item.Account.Common.Sports) in common!</p>
+
+                        </div>
+                    </td>
+                </tr>
+                -->
+                }
+                break;
+            }
+        }
     </div>
-
-    <div class="vl"></div>
-
-    <a href="../Messages/Index">
-        <div class="column right" style="background-color: white">
-            <a href="../Messages/Inbox">
-                <h2>Recent Messages</h2>
-            </a>
-            <a href="../Messages/Inbox">
-                <p>Messages 1</p>
-            </a>
-            <a href="../Messages/Inbox">
-                <p>Messages 2</p>
-            </a>
-            <a href="../Messages/Inbox">
-                <p>Messages 3</p>
-            </a>
-            <a href="../Messages/Inbox">
-                <p>Messages 4</p>
-            </a>
-        </div>
-    </a>
+    <div class="column right">
+        <h2>Messages</h2>
+        @foreach (var item in Model)
+        {
+            if (User.Identity.GetUserName() == item.Account.Email)
+            {
+                <div style="border-style:solid solid double double; border-width:5px">
+                    <p>A new message from @Html.DisplayFor(modelItem => item.Account1.Username)</p>
+                    <a href="../Messages/Index">
+                        <p>@Html.DisplayFor(modelItem => item.Body)</p>
+                    </a>
+                </div>
+            }
+        }
+    </div>
 </div>

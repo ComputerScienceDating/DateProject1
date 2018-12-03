@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DateProject1.Models;
 
 namespace DateProject1.Controllers
 {
     public class HomeController : Controller
     {
+        private datedbEntities1 db = new datedbEntities1();
+
         public ActionResult ThankYou()
         {
             return View();
         }
         public ActionResult Index()
         {
-            return View();
+            var messages = db.Messages.Include(m => m.Account).Include(m => m.Account1);
+            
+            return View(messages.ToList());
         }
 
         public ActionResult About()

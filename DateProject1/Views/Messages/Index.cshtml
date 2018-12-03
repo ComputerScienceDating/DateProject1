@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<DateProject1.Models.Message>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage Messages";
 }
 
-<h2>Index</h2>
+<h2>Message Management</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+@using (Html.BeginForm("Index", "Messages", FormMethod.Get))
+{
+    <b> Search Options: </b> @Html.RadioButton("option", "UsernameToID") <text>UsernameFID</text> @Html.RadioButton("option", "UsernameFID") <text>UsernameToID</text> @Html.TextBox("search") <input type="submit" name="submit" value="Search" />
+}
 <table class="table">
     <tr>
         <th>
@@ -18,34 +20,36 @@
             @Html.DisplayNameFor(model => model.Outbox)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Account.Username)
+            UsernameToID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Account1.Username)
+            UsernameFID
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Body)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Outbox)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account1.Username)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MessageID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MessageID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MessageID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Body)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Outbox)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account1.Username)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MessageID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MessageID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MessageID }) |
+                @Html.ActionLink("Report", "../Reports/Create", new { id = item.MessageID })
+            </td>
+        </tr>
+    }
 
 </table>

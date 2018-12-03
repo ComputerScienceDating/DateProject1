@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DateProject1.Models.Message>
+
+@{
+    ViewBag.Title = "Inbox";
+}
+<head>
+    <link href="~/Content/PopUps.css" rel="stylesheet" />
+</head>
+<h1>Inbox</h1>
+<p>
+    Here are all of your current messages.
+</p>
+<p><a href="../Messages/Create"  class="btn btn-primary btn">Compose</a>     <span style="float:right"> @Html.ActionLink("View Sent Messages", "Outgoing")</span></p>
+@using (Html.BeginForm("Inbox", "Messages", FormMethod.Get))
+{
+    <b> Search Options: </b> @Html.RadioButton("option", "Username") <text>Username</text> @Html.RadioButton("option", "Subject") <text>Subject</text> @Html.TextBox("search") <input type="submit" name="submit" value="Search" />
+}
+<table class="table">
+    <tr>
+        <th>
+            From
+        </th>
+        <th>
+            Subject
+        </th>
+        <th>
+            Message
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account1.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Outbox)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Body)
+            </td>
+
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.MessageID }) |
+                @Html.ActionLink("Report", "../Reports/Create", new { id = item.MessageID })
+            </td>
+        </tr>
+    }
+
+</table>
+

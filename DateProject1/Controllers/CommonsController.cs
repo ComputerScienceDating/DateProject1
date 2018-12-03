@@ -84,7 +84,7 @@ namespace DateProject1.Controllers
             {
                 db.Entry(common).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("../People/Prof");
             }
             return View(common);
         }

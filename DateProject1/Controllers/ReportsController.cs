@@ -12,16 +12,25 @@ namespace DateProject1.Controllers
 {
     public class ReportsController : Controller
     {
+        private int selectID = 1;
         private datedbEntities1 db = new datedbEntities1();
 
         // GET: Reports
-        public ActionResult Index()
+        [Authorize(Roles = "Admin")]
+        public ActionResult Index(string option, string search)
         {
-            var reports = db.Reports.Include(r => r.Account);
-            return View(reports.ToList());
+            if (option == "Username")
+            {
+                return View(db.Reports.Where(r => r.Account.Username.StartsWith(search) || search == null).ToList());
+            }
+            else
+            {
+                return View(db.Reports.Where(r => r.Reason.StartsWith(search) || search == null).ToList());
+            }
         }
 
         // GET: Reports/Details/5
+        [Authorize (Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,9 +46,29 @@ namespace DateProject1.Controllers
         }
 
         // GET: Reports/Create
-        public ActionResult Create()
+        // GET: Reports/Create
+        [Authorize]
+        public ActionResult Create(string option, string reason, int? id, Message report)
         {
+            report = db.Messages.Find(id);
             ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "Username");
+            ViewBag.AID = report.Account1.Username;
+            if (option == "Inappropriate")
+            {
+                ViewBag.Reason = "Inappropriate";
+            }
+            else if (option == "Bot")
+            {
+                ViewBag.Reason = "Bot";
+            }
+            else if (option == "Underage")
+            {
+                ViewBag.Reason = "Underage";
+            }
+            else
+            {
+                ViewBag.Reason = "Harassment";
+            }
             return View();
         }
 
@@ -48,16 +77,43 @@ namespace DateProject1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReportID,AccountID,Reason")] Report report)
+        public ActionResult Create([Bind(Include = "ReportID,AccountID")] Report report, string returnURL, string option, string reason, Message reportM, int? id)
         {
             if (ModelState.IsValid)
             {
+                reportM = db.Messages.Find(id);
+                report.AccountID = reportM.Account1.AccountID;
+                if (option == "Inappropriate")
+                {
+                    Session["Reason"] = "Inappropriate";
+                    ViewBag.Reason = "Inappropriate";
+                    report.Reason = "Inappropriate";
+                }
+                else if (option == "Bot")
+                {
+                    Session["Reason"] = "Bot";
+                    ViewBag.Reason = "Bot";
+                    report.Reason = "Bot";
+                }
+                else if (option == "Underage")
+                {
+                    Session["Reason"] = "Underage";
+                    ViewBag.Reason = "Underage";
+                    report.Reason = "Underage";
+                }
+                else
+                {
+                    Session["Reason"] = "Harassment";
+                    ViewBag.Reason = "Harassment";
+                    report.Reason = "Harassment";
+                }
+
                 db.Reports.Add(report);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Inbox", "Messages");
             }
-
-            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "Username", report.AccountID);
+            var v = db.Accounts.OrderByDescending(m => m.Username).First();
+            ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "Username", v);
             return View(report);
         }
 
@@ -95,6 +151,7 @@ namespace DateProject1.Controllers
         }
 
         // GET: Reports/Delete/5
+        [Authorize (Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

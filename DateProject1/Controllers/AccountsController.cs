@@ -15,10 +15,26 @@ namespace DateProject1.Controllers
         private datedbEntities1 db = new datedbEntities1();
 
         // GET: Accounts
-        public ActionResult Index()
+        public ActionResult Index(string option, string search)
         {
-            var accounts = db.Accounts.Include(a => a.Common).Include(a => a.Education).Include(a => a.Person);
-            return View(accounts.ToList());
+            if (option == "Username")
+            {
+                return View(db.Accounts.Where(m => m.Username.StartsWith(search) || search == null).ToList());
+            }
+            if (option == "Email")
+            {
+                return View(db.Accounts.Where(m => m.Email.StartsWith(search) || search == null).ToList());
+            }
+            if (option == "Occupation")
+            {
+                return View(db.Accounts.Where(m => m.Person.Occupation.StartsWith(search) || search == null).ToList());
+            }
+            else
+            {
+                return View(db.Accounts.Where(m => m.Education.School.StartsWith(search) || search == null).ToList());
+            }
+            //var accounts = db.Accounts.Include(a => a.Common).Include(a => a.Education).Include(a => a.Person);
+            //return View(accounts.ToList());
         }
 
         // GET: Accounts/Details/5
@@ -42,6 +58,7 @@ namespace DateProject1.Controllers
             ViewBag.CommonID = new SelectList(db.Commons, "CommonID", "Sports");
             ViewBag.EducationID = new SelectList(db.Educations, "EducationID", "School");
             ViewBag.PersonID = new SelectList(db.People, "PersonID", "Occupation");
+
             return View();
         }
 
@@ -55,11 +72,17 @@ namespace DateProject1.Controllers
             if (ModelState.IsValid)
             {
                 db.Accounts.Add(account);
+                Message x = new Message();
+                x.Body = "Welcome to Class-Mates!";
+                x.FromID = account.AccountID;
+                x.Outbox = "No Reply";
+                x.AccountID = account.AccountID;
+                db.Messages.Add(x);
                 db.SaveChanges();
                 return RedirectToAction("../Home/ThankYou");
             }
 
-            ViewBag.CommonID = new SelectList(db.Commons, "CommonID", "Sports", account.CommonID);
+            ViewBag.CommonID = new SelectList(db.Commons, "CommonID", "Sports, Music, Food", account.CommonID);
             ViewBag.EducationID = new SelectList(db.Educations, "EducationID", "School", account.EducationID);
             ViewBag.PersonID = new SelectList(db.People, "PersonID", "Occupation", account.PersonID);
             return View(account);
@@ -77,7 +100,7 @@ namespace DateProject1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CommonID = new SelectList(db.Commons, "CommonID", "Sports", account.CommonID);
+            ViewBag.CommonID = new SelectList(db.Commons, "CommonID", "Sports, Music, Food", account.CommonID);
             ViewBag.EducationID = new SelectList(db.Educations, "EducationID", "School", account.EducationID);
             ViewBag.PersonID = new SelectList(db.People, "PersonID", "Occupation", account.PersonID);
             return View(account);
@@ -135,6 +158,22 @@ namespace DateProject1.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult Matches()
+        {
+            var accounts = db.Accounts.Include(a => a.Common).Include(a => a.Education).Include(a => a.Person);
+            return View(accounts.ToList());
+        }
+
+        public ActionResult ToMessage()
+        {
+            return RedirectToAction("Create", "Messages");
+        }
+
+        public ActionResult ToProfile()
+        {
+            return RedirectToAction("Prof", "People");
         }
     }
 }

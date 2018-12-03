@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<DateProject1.Models.Account>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage Accounts";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Account Management</h2>
+@using (Html.BeginForm("Index", "Accounts", FormMethod.Get))
+{
+    <b> Search Options: </b> @Html.RadioButton("option", "Username") <text>Username</text> @Html.RadioButton("option", "Email") <text>Email</text> @Html.RadioButton("option", "Occupation") <text>Occupation</text> @Html.RadioButton("option", "School") <text>School</text> @Html.TextBox("search") <input type="submit" name="submit" value="Search" />
+}
 <table class="table">
     <tr>
         <th>
@@ -32,32 +33,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Common.Sports)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Education.School)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Person.Occupation)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AccountID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AccountID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AccountID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Common.Sports)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Education.School)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Person.Occupation)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AccountID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AccountID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AccountID })
+            </td>
+        </tr>
+    }
 
 </table>

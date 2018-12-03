@@ -1,0 +1,359 @@
+﻿@model IEnumerable<DateProject1.Models.Account>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Matches";
+}
+
+<h2>Matches</h2>
+
+<table class="table">
+    <tr>
+        <th>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Common.Sports)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Common.Movies)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Common.Music)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Common.Shows)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Common.Sports)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Common.Food)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Common.Books)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Education.School)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Person.Occupation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Person.Bio)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.Email == User.Identity.GetUserName())
+        {
+                foreach (var item2 in Model)
+                {
+                    if (item.Common.Sports.ToUpper() == item2.Common.Sports.ToUpper() && item2.Email != item.Email)
+                    {
+                        <tr>
+                            <td>
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item2.Person.Photo)" width="80" height="80" />
+                            </td>
+                            <td>
+                                @Html.ActionLink(item2.Username, "ToProfile", new { id = item2.AccountID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Movies)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Music)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Shows)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Food)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Books)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Education.School)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Occupation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Bio)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Message", "ToMessage", new { id = item2.AccountID })
+                            </td>
+                        </tr>
+                        continue;
+                    }
+
+                    if (item.Common.Books.ToUpper() == item2.Common.Books.ToUpper() && item2.Email != item.Email)
+                    {
+
+                        <tr>
+                            <td>
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item2.Person.Photo)" width="80" height="80" />
+                            </td>
+                                @Html.ActionLink(item2.Username, "ToProfile", new { id = item2.AccountID })
+                            <td></td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Movies)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Music)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Shows)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Food)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Books)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Education.School)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Occupation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Bio)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Message", "ToMessage", new { id = item2.AccountID })
+                            </td>
+                        </tr>
+                        continue;
+                    }
+                    if (item.Common.Food.ToUpper() == item2.Common.Food.ToUpper() && item2.Email != item.Email)
+                    {
+                        <tr>
+                            <td>
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item2.Person.Photo)" width="80" height="80" />
+                            </td>
+                            <td>
+                                @Html.ActionLink(item2.Username, "ToProfile", new { id = item2.AccountID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Movies)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Music)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Shows)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Food)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Books)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Education.School)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Occupation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Bio)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Message", "ToMessage", new { id = item2.AccountID })
+                            </td>
+                        </tr>
+                        continue;
+                    }
+
+                    if (item.Common.Movies.ToUpper() == item2.Common.Movies.ToUpper() && item2.Email != item.Email)
+                    {
+                        <tr>
+                            <td>
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item2.Person.Photo)" width="80" height="80" />
+                            </td>
+                            <td>
+                                @Html.ActionLink(item2.Username, "ToProfile", new { id = item2.AccountID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Movies)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Music)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Shows)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Food)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Books)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Education.School)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Occupation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Bio)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Message", "ToMessage", new { id = item2.AccountID })
+                            </td>
+                        </tr>
+                        continue;
+                    }
+
+                    if (item.Common.Music.ToUpper() == item2.Common.Music.ToUpper() && item2.Email != item.Email)
+                    {
+
+                        <tr>
+                            <td>
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item2.Person.Photo)" width="80" height="80" />
+                            </td>
+                            <td>
+                                @Html.ActionLink(item2.Username, "ToProfile", new { id = item2.AccountID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Movies)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Music)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Shows)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Food)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Books)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Education.School)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Occupation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Bio)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Message", "ToMessage", new { id = item2.AccountID })
+                            </td>
+                        </tr>
+                        continue;
+                    }
+
+                    if (item.Common.Shows.ToUpper() == item2.Common.Shows.ToUpper() && item2.Email != item.Email)
+                    {
+                        <tr>
+                            <td>
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item2.Person.Photo)" width="80" height="80" />
+                            </td>
+                            <td>
+                                @Html.ActionLink(item2.Username, "ToProfile", new { id = item2.AccountID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Movies)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Music)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Shows)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Sports)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Food)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Common.Books)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Education.School)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Occupation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Person.Bio)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Message", "ToMessage", new { id = item2.AccountID })
+                            </td>
+                        </tr>
+                        continue;
+                    }
+
+
+
+                }
+        }
+    }
+    </div>
+    </table>

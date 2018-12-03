@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using DateProject1.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DateProject1
 {
@@ -18,7 +19,7 @@ namespace DateProject1
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
-
+            createRoles();
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
@@ -64,5 +65,37 @@ namespace DateProject1
             //    ClientSecret = ""
             //});
         }
+        private void createRoles()
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+            if(!roleManager.RoleExists("Admin"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+
+                var user = new ApplicationUser();
+                user.UserName = "Dating@Date.com";
+                user.Email = "Dating@Date.com";
+                string userPWD = "Dating123!";
+                var chkUser = UserManager.Create(user, userPWD);
+
+                if(chkUser.Succeeded)
+                {
+                    var result = UserManager.AddToRole(user.Id, "Admin");
+                } 
+            }
+            if (!roleManager.RoleExists("DateUser"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "DateUser";
+                roleManager.Create(role);
+            }
+        }
+
     }
 }

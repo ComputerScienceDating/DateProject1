@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<DateProject1.Models.Report>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Manage Reports";
 }
 
-<h2>Index</h2>
+<h2>Report Management</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@using (Html.BeginForm("Index", "Reports", FormMethod.Get))
+{
+    <b> Search Options: </b> @Html.RadioButton("option", "Username") <text>Username</text> @Html.RadioButton("option", "Reason") <text>Reason</text> @Html.TextBox("search") <input type="submit" name="submit" value="Search" />
+}
 <table class="table">
     <tr>
         <th>
@@ -20,20 +21,19 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reason)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account.Username)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReportID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReportID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ReportID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Username)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.ReportID })
+            </td>
+        </tr>
+    }
 
 </table>

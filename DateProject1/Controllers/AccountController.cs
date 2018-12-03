@@ -17,9 +17,11 @@ namespace DateProject1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        ApplicationDbContext context;
 
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -57,6 +59,10 @@ namespace DateProject1.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -139,6 +145,7 @@ namespace DateProject1.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
             return View();
         }
 
@@ -156,18 +163,18 @@ namespace DateProject1.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("../Commons/Create");
                 }
+                ViewBag.Name = new SelectList(context.Roles.ToList(), "Name", "Name");
                 AddErrors(result);
             }
-
+        
             // If we got this far, something failed, redisplay form
             return View(model);
         }

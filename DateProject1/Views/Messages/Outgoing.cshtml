@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DateProject1.Models.Message>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Outgoing";
+}
+<h1>Outgoing</h1>
+<p>
+    Here are all of your outgoing messages.
+</p>
+<p><a href="../Messages/Create" class="btn btn-primary btn">Compose</a>     <span style="float:right"> @Html.ActionLink("View Received Messages", "Inbox")</span></p>
+@using (Html.BeginForm("Outgoing", "Messages", FormMethod.Get))
+{
+    <b> Search Options: </b> @Html.RadioButton("option", "Username") <text>Username</text> @Html.RadioButton("option", "Subject") <text>Message</text> @Html.TextBox("search") <input type="submit" name="submit" value="Search" />
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Account.Username)
+        </th>
+        <th>
+            Subject
+        </th>
+        <th>
+            Message
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Outbox)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Body)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.MessageID })
+            </td>
+        </tr>
+    }
+</table>

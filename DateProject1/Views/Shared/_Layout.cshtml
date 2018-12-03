@@ -20,6 +20,7 @@
         width: 45%;
         float: left;
         border-right: 3px solid black;
+        height: 75%;
     }
     .right {
         width: 45%;
@@ -30,7 +31,7 @@
         height: 110px;
     }
     .logoL {
-        width: 10%;
+        width: 15%;
         height: 105px;
         top: 0px;
         float: left;
@@ -38,10 +39,14 @@
     }
     .bannerR {
         width: 85%;
-        height: 105x;
+        height: 105px;
         top: 0px;
         float: right;
         overflow: auto;
+    }
+    body {
+        background-image: url("../../Content/Images/Gradiant_Pink_White.png");
+            background-size: cover;
     }
 </style>
 
@@ -50,14 +55,14 @@
     <div class="headerArea">
         <div class="logoL">
             <a href="../Home/Index">
-                <img src="~/Content/Images/LogoTemp.png" style="width:100%; height:100px"/>
+                <img src="~/Content/Class-Mates Logo.png" style="width:100%; height:100px"/>
             </a>
         </div>
         <div class="bannerR">
             <img src="~/Content/Images/BannerTest.png" style="width:100%; height:100px"/>
         </div>
     </div>
-    <div class="navbar navbar-inverse">
+    <div class="navbar navbar-inverse" style="position: sticky">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -71,11 +76,22 @@
                 <ul class="nav navbar-nav">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Profile", "Index", "People")</li>
-                        <li>@Html.ActionLink("Matches", "Index", "Commons")</li>
-                        <li>@Html.ActionLink("Messages", "Index", "Messages")</li>
-                        <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+                        if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Manage Accounts", "Index", "Accounts")</li>
+                            <li>@Html.ActionLink("Manage Profiles", "Index", "People")</li>
+                            <li>@Html.ActionLink("Manage Messages", "Index", "Messages")</li>
+                            <li>@Html.ActionLink("Manage Reports", "Index", "Reports")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Profile", "Prof", "People")</li>
+                            <li>@Html.ActionLink("Matches", "Matches", "Accounts")</li>
+                            <li>@Html.ActionLink("Messages", "Inbox", "Messages")</li>
+                            <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+                        }
                     }
+
                     else
                     {
                         <li>@Html.ActionLink("About", "About", "Home")</li>
@@ -90,7 +106,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - A Group 2 Production</p>
         </footer>
     </div>
 
