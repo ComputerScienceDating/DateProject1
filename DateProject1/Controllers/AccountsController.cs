@@ -15,6 +15,7 @@ namespace DateProject1.Controllers
         private datedbEntities1 db = new datedbEntities1();
 
         // GET: Accounts
+        [Authorize(Roles = "Admin")]
         public ActionResult Index(string option, string search)
         {
             if (option == "Username")

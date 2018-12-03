@@ -15,6 +15,7 @@ namespace DateProject1.Controllers
         private datedbEntities1 db = new datedbEntities1();
 
         // GET: Commons
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.Commons.ToList());

@@ -15,6 +15,7 @@ namespace DateProject1.Controllers
         private datedbEntities1 db = new datedbEntities1();
         private int FID;
         // GET: Messages
+        [Authorize(Roles = "Admin")]
         public ActionResult Index(string option, string search)
         {
             if (option == "UsernameFID")
@@ -125,7 +126,7 @@ namespace DateProject1.Controllers
             {
                 db.Entry(message).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Outgoing");
             }
             ViewBag.FromID = new SelectList(db.Accounts, "AccountID", "Username", message.FromID);
             ViewBag.AccountID = new SelectList(db.Accounts, "AccountID", "Username", message.AccountID);
@@ -155,7 +156,7 @@ namespace DateProject1.Controllers
             Message message = db.Messages.Find(id);
             db.Messages.Remove(message);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Inbox");
         }
 
         protected override void Dispose(bool disposing)
