@@ -1,0 +1,125 @@
+﻿@model IEnumerable<DateProject1.Models.Account>
+@using Microsoft.AspNet.Identity;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Prof</title>
+    <style>
+        .profpic {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+        }
+
+        .profname {
+            position: relative;
+            left: 50%;
+        }
+
+        .profgeneral {
+            position: relative;
+            padding-left: 3px;
+            border-style: groove;
+            border-width: 3px;
+            border-color: black;
+        }
+
+        .profbio2 {
+            position: relative;
+            padding-left: 3px;
+            border-style: groove;
+            border-width: 3px;
+            border-color: black;
+        }
+    </style>
+</head>
+<body>
+    <!--<p>
+        Html.ActionLink("Create New", "Create")
+    </p>-->
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    @foreach (var item in Model)
+    {
+        var age = DateTime.Now.Year - item.Person.DOB.Year;
+        System.Globalization.DateTimeFormatInfo month = new System.Globalization.DateTimeFormatInfo();
+        string MonthName = month.GetMonthName(item.Person.DOB.Month).ToString();
+
+        if (item.Email == ViewBag.OtherProfile)
+        {
+            <div class="profpic">
+                <img src="data:image;base64,@System.Convert.ToBase64String(item.Person.Photo)" width="200" height="200" />
+            </div>
+            <div class="profname">
+                | @Html.ActionLink("Edit Photo", "Edit", new { id = item.PersonID }) |
+            </div>
+            <div class="profname"><h2>@Html.DisplayFor(modelItem => item.Person.FirstName) "@Html.DisplayFor(modelItem => item.Person.NickName)" @Html.DisplayFor(modelItem => item.Person.LastName)</h2></div>
+            <br /><br />
+            <table>
+                <tr>
+                    <td>
+                        <h3>Bio:</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="profbio2">@Html.DisplayFor(modelItem => item.Person.Bio)</div>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                | @Html.ActionLink("Edit Bio", "Edit", new { id = item.PersonID }) |
+            </div>
+            <br />
+            <h3>General Information:</h3>
+            <div class="profgeneral">
+                Hello there, class-mate! I am a <b>@Html.DisplayFor(modelItem => item.Person.Gender)</b>!
+                <br />
+                I am <b>@Html.DisplayFor(modelItem => item.Person.SexOrientation)</b>!
+                <br />
+                I was born on <b>@MonthName @Html.DisplayFor(modelItem => item.Person.DOB.Day), @Html.DisplayFor(modelItem => item.Person.DOB.Year)</b>!
+                <br />
+                I am <b>@age</b> years old!
+                <br />
+                I work as a <b>@Html.DisplayFor(modelItem => item.Person.Occupation)</b>!
+            </div>
+            <div>
+                | @Html.ActionLink("Edit General Information", "../Accounts/Edit", new { id = item.AccountID }) |
+            </div>
+            <br />
+            <h3>Education:</h3>
+            <div class="profgeneral">
+                I attend <b>@Html.DisplayFor(modelItem => item.Education.School)</b> class of <b>@Html.DisplayFor(modelItem => item.Education.GradYear)</b>!
+                <br />
+                I am going to school for <b>@Html.DisplayFor(modelItem => item.Education.Major)</b>!
+            </div>
+            <div>
+                | @Html.ActionLink("Edit Education", "../Educations/Edit", new { id = item.EducationID }) |
+            </div>
+            <br />
+            <h3>Hobbies and Interests:</h3>
+            <div class="profgeneral">
+                <b>@Html.DisplayFor(modelItem => item.Common.Sports)</b> is my favorite sport!
+                <br />
+                <b>@Html.DisplayFor(modelItem => item.Common.Books)</b> is what I like to read!
+                <br />
+                <b>@Html.DisplayFor(modelItem => item.Common.Movies)</b> is a movie I like to watch!
+                <br />
+                One of my favorite T.V. shows to watch is <b>@Html.DisplayFor(modelItem => item.Common.Shows)</b>!
+                <br />
+                When I'm not watching any shows or movies, I like listening to <b>@Html.DisplayFor(modelItem => item.Common.Music)</b>!
+                <br />
+                I am such a fatass! I love eating <b>@Html.DisplayFor(modelItem => item.Common.Food)</b>!
+            </div>
+            <div>
+                | @Html.ActionLink("Edit Hobbies and Interests", "../Commons/Edit", new { id = item.CommonID }) |
+                <!--Html.ActionLink("Details", "Details", new { id = item.PersonID }) |-->
+                <!--Html.ActionLink("Delete", "Delete", new { id = item.PersonID })-->
+            </div>
+        }
+    }
+</body>
+</html>
+

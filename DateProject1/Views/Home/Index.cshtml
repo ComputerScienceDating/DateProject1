@@ -86,7 +86,7 @@
                                                 </td>
                                                 <td>
                                                     <div style="border-style:solid solid double double; border-width:5px">
-                                                        <p>New Match With @Html.DisplayFor(modelItem => item2.Account.Username)</p>
+                                                        <p>New Match With @Html.ActionLink(item2.Account.Username, "ToProfile", new { id = item2.AccountID })</p>
                                                         <p>
                                                             You have
                                                             <script>document.write(commonString)</script> in common!

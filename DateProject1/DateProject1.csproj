@@ -414,6 +414,7 @@
     <Content Include="Views\Accounts\Matches.cshtml" />
     <Content Include="Views\Messages\Outgoing.cshtml" />
     <Content Include="Views\Messages\Inbox.cshtml" />
+    <Content Include="Views\Home\ToProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
