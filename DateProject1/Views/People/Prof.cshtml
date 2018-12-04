@@ -83,7 +83,7 @@
                 I work as a <b>@Html.DisplayFor(modelItem => item.Person.Occupation)</b>!
             </div>
             <div>
-                | @Html.ActionLink("Edit General Information", "../Accounts/Edit", new { id = item.AccountID }) |
+                | @Html.ActionLink("Edit General Information", "Edit", new { id = item.PersonID }) |
             </div>
             <br />
             <h3>Education:</h3>
