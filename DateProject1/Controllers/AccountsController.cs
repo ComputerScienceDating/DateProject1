@@ -201,9 +201,17 @@ namespace DateProject1.Controllers
             return RedirectToAction("Create", "Messages");
         }
 
-        public ActionResult ToProfile()
+        public ActionResult ToProfile(int? id)
         {
-            return RedirectToAction("Prof", "People");
+            foreach (var item in db.Accounts)
+            {
+                if (item.AccountID == id)
+                {
+                    ViewBag.OtherProfile = item.Email;
+                }
+            }
+            var accounts = db.Accounts.Include(a => a.Common).Include(a => a.Education).Include(a => a.Person);
+            return View(accounts.ToList());
         }
     }
 }
